@@ -1,0 +1,44 @@
+@import "scss/variables";
+@import "scss/mixins";
+
+// local variables
+$glassHeight: 100px;
+$borderWidth: 5px;
+$animationDuration: 2000ms;
+
+.glass-wrapper {
+    position: relative;
+}
+
+.glass {
+    border: $borderWidth solid black;
+    border-bottom-width: $borderWidth * 2;
+    border-top: transparent;
+    border-radius: 0 0 $borderWidth / 2 $borderWidth / 2;
+    height: $glassHeight;
+    width: $glassHeight * 0.6;
+    transform: perspective($glassHeight) rotateX(-10deg);
+    position: relative;
+    overflow: hidden;
+}
+
+.beer {
+    height: 95%;
+    width: 100%;
+    background-color: $secondary;
+    position: absolute;
+    bottom: 0;
+    transform: scaleY(1);
+    transform-origin: bottom;
+    animation: beer-fill $animationDuration linear infinite;
+}
+
+@keyframes beer-fill {
+    0% {
+        transform: scaleY(0);
+    }
+    48%,
+    100% {
+        transform: scaleY(1);
+    }
+}

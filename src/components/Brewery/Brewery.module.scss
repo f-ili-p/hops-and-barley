@@ -1,0 +1,39 @@
+@import "scss/variables";
+@import "scss/mixins";
+
+.single_brewery {
+    width: 1440px;
+    height: 600px;
+    @include flexbox(row, space-evenly, center);
+
+    img {
+        width: 700px;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .content {
+        width: 400px;
+        height: 100%;
+        @include flexbox(column, flex-start, flex-start);
+    }
+
+    .content_line {
+        @include flexbox(column, flex-start, flex-start);
+
+        span {
+            font-size: 13px;
+            color: #00000060;
+        }
+
+        p {
+            margin: 10px 0 20px;
+            font-size: 18px;
+        }
+    }
+
+    .link_to {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

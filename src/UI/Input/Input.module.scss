@@ -1,0 +1,53 @@
+@import "scss/variables";
+@import "scss/mixins";
+
+.input_wrapper {
+    width: 100%;
+    height: 50px;
+    // padding: 0 16px;
+    font-size: 14px;
+    line-height: 17px;
+    background-color: #fff;
+    outline: none;
+    -webkit-user-select: text; // for safari
+    transition: all 0.3s ease-out;
+    display: flex;
+    position: relative;
+
+    input {
+        width: 100%;
+        border: 1px solid #c4c4c4;
+        font-family: "Montserrat";
+
+        padding: 16px;
+
+        &:hover,
+        &:active,
+        &:focus {
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        // for removing arrows on chrome
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        -moz-appearance: textfield; // for removing arrows on mozilla
+
+        &:focus-visible {
+            outline: none;
+        }
+
+        &:read-only {
+            opacity: 0.4;
+            cursor: not-allowed;
+
+            &:hover {
+                border: unset;
+                border-left: 1px solid #c4c4c4;
+            }
+        }
+    }
+}

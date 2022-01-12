@@ -1,0 +1,20 @@
+@import "scss/variables";
+@import "scss/mixins";
+
+.favorites {
+    @include flexbox(column, center, center);
+
+    h1 {
+        margin-bottom: 60px;
+    }
+
+    p {
+        max-width: 300px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .btn {
+        width: 220px;
+    }
+}

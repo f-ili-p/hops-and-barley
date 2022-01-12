@@ -1,0 +1,42 @@
+@import "variables";
+
+//Function to convert px value into rem
+//You can replace rem with any other value you want (rem is most preferred value for web)
+@function size($target, $context: $base-size) {
+    @return ($target / $context) * 1rem;
+}
+
+// Breakpoints
+@mixin respond_to($breakpoint) {
+    // If the key exists in the map
+    @if map-has-key($breakpoints, $breakpoint) {
+        // Prints a media query based on the value
+        @media only screen and #{inspect(map-get($breakpoints, $breakpoint))} {
+            @content;
+        }
+    }
+
+    // If the key doesn't exist in the map
+    @else {
+        @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+}
+
+// Basic transition for all props and 0.4s duration
+@mixin basic_transition($property: all, $time_in_seconds: 0.3, $delay: 0) {
+    transition: $property #{$time_in_seconds}s
+        cubic-bezier(0.215, 0.61, 0.355, 1) #{$delay}s;
+}
+
+@mixin square($size) {
+    width: $size;
+    height: $size;
+}
+
+@mixin flexbox($direction, $content, $align) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $content;
+    align-items: $align;
+}

@@ -1,0 +1,34 @@
+@import "scss/variables";
+@import "scss/mixins";
+
+.button {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19px;
+    border: none;
+    outline: none;
+    background-color: #000;
+    color: #fff;
+    font-family: "Montserrat";
+    @include basic_transition();
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+        background-color: #fff;
+        border: 1px solid #000;
+        color: #000;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+
+        &:hover {
+            background-color: 000;
+            color: #fff;
+        }
+    }
+}
