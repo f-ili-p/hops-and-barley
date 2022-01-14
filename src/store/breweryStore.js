@@ -37,7 +37,7 @@ export const createBreweryStore = () => {
                 const resp = await brewerySearch(params);
 
                 runInAction(() => {
-                    // check if search is null and return only fetched data
+                    // check if search is null or if input search is changed and return only fetched data
                     this.searchData =
                         this.searchData === null ||
                         this.searchQuery !== params.query
