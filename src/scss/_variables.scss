@@ -1,8 +1,6 @@
 // Brands -------------------
 $base: #fff;
-$primary: #7d5f4b;
 $secondary: #d89b38;
-$warning: #f10000;
 // --------------------------
 
 // Typography -------------
@@ -12,21 +10,21 @@ $base_size: 16;
 // Breakpoints -------------
 $breakpoints: (
     "xs": (
-        min-width: 350px,
+        min-width: 415px,
     ),
     "sm": (
-        min-width: 640px,
-    ),
-    "md": (
         min-width: 768px,
     ),
-    "lg": (
+    "md": (
         min-width: 1024px,
     ),
-    "xl": (
+    "lg": (
         min-width: 1280px,
     ),
+    "xl": (
+        min-width: 1440px,
+    ),
     "2xl": (
-        min-width: 1536px,
+        min-width: 1920px,
     ),
 ) !default;

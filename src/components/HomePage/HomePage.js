@@ -1,70 +1,106 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useObserver } from "mobx-react";
 
 import Input from "UI/Input/Input";
 import Spinner from "UI/Spinner/Spinner";
 import PrimaryButton from "UI/PrimaryButton/PrimaryButton";
 import BreweryList from "components/BreweryList/BreweryList";
-import API from "API";
+
+import { useBreweryStore } from "store/BreweryContext";
 
 import styles from "./HomePage.module.scss";
 
+const LIMIT = 24;
+const PAGE = 1;
+
 const HomePage = () => {
+    // initialize store
+    const store = useBreweryStore();
+
     // initialize state
-    const [searchValue, setSearchValue] = useState("");
-    const [breweriesList, setBreweriesList] = useState(null);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [spinner, setSpinner] = useState(false);
+    const [localSearch, setLocalSearch] = useState(store.searchQuery);
+    // number of breweries to return each page
+    const [page, setPage] = useState(PAGE);
+    const [limit] = useState(LIMIT);
+
+    useEffect(() => {
+        // fetch more breweries only of page changes
+        if (page !== 1) {
+            const params = {
+                page,
+                limit,
+                query: localSearch,
+            };
+
+            fetchMore(params);
+        }
+    }, [page]);
+
+    const fetchMore = async (params) => {
+        await store.getSearchData(params);
+    };
 
     const handleSearch = async (e) => {
         // prevent browser from refreshing the page when user clicks enter
         e.preventDefault();
 
-        // set loader while waiting data from BE
-        setSpinner(true);
+        // set params for search query
+        const params = {
+            page,
+            limit,
+            query: localSearch,
+        };
 
-        try {
-            const resp = await API.get(
-                `/breweries/search?query=${searchValue}`
-            );
-            const { data } = resp;
-            // set data into state
-            setBreweriesList(data);
-            setSpinner(false); // stop loader
-            console.log("resp", resp);
-        } catch (error) {
-            console.log("error", error);
-            // if error appears set it into state and show some fallback text
-            setErrorMessage(error);
-            setSpinner(false); // stop loader
-        }
+        await store.getSearchData(params);
     };
 
-    return (
+    const onSearchValue = (e) => {
+        // set page to initial value if search input changes
+        setPage(PAGE);
+        setLocalSearch(e.target.value);
+    };
+
+    const loadMore = () => {
+        setPage(page + 1);
+    };
+
+    return useObserver(() => (
         <div className={styles.home_page}>
             <div className={styles.search_wrapper}>
                 <form onSubmit={handleSearch}>
                     <Input
-                        value={searchValue}
-                        changed={(e) => setSearchValue(e.target.value)}
+                        value={localSearch}
+                        changed={onSearchValue}
                         placeholder="search"
                     />
-                    <PrimaryButton type="submit">Search</PrimaryButton>
+                    <PrimaryButton
+                        type="submit"
+                        disabled={store.status === "LOADING"}
+                    >
+                        Search
+                    </PrimaryButton>
                 </form>
             </div>
-            {spinner ? (
+            {store.status === "LOADING" && store?.searchData === null ? (
                 <Spinner />
             ) : (
                 <>
-                    {breweriesList && breweriesList?.length !== 0 && (
-                        <BreweryList breweryList={breweriesList} />
+                    {store?.searchData?.length !== 0 && (
+                        <BreweryList
+                            breweryList={store?.searchData}
+                            loadMore={loadMore}
+                            disableBtn={
+                                store?.searchData?.length < limit * page
+                            }
+                        />
                     )}
-                    {breweriesList && breweriesList?.length === 0 && (
+                    {store?.searchData?.length === 0 && (
                         <p>
                             Sorry there is no search for your query, Please try
                             again.
                         </p>
                     )}
-                    {errorMessage && (
+                    {store.status === "ERROR" && store.errorMessage && (
                         <p>
                             Sorry something went wrong, Please try again later.
                         </p>
@@ -72,7 +108,7 @@ const HomePage = () => {
                 </>
             )}
         </div>
-    );
+    ));
 };
 
 export default HomePage;

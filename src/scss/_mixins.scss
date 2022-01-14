@@ -1,11 +1,5 @@
 @import "variables";
 
-//Function to convert px value into rem
-//You can replace rem with any other value you want (rem is most preferred value for web)
-@function size($target, $context: $base-size) {
-    @return ($target / $context) * 1rem;
-}
-
 // Breakpoints
 @mixin respond_to($breakpoint) {
     // If the key exists in the map

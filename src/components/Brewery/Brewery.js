@@ -75,7 +75,18 @@ const Brewery = () => {
         setIsBreweryFavorite(false);
     };
 
-    // console.log("data", data);
+    const openOnMaps = () => {
+        // open brewery location on google maps
+        // with latitude, longitude and 17 zoom by default
+        window.open(
+            `https://www.google.com/maps/@${data?.latitude},${data?.longitude},17z`
+        );
+    };
+
+    const openWebsite = () => {
+        // open website in another tab
+        window.open(data.website_url);
+    };
 
     return useObserver(() => (
         <>
@@ -86,31 +97,46 @@ const Brewery = () => {
                     <img src={breweryLogo} alt="brewery logo" />
                     <div className={styles.content}>
                         <h1>{data?.name}</h1>
-                        <div className={styles.content_line}>
-                            <span>type:</span>
-                            <p>{data?.brewery_type}</p>
-                        </div>
-                        <div className={styles.content_line}>
-                            <span>street:</span>
-                            <p>{data?.street}</p>
-                        </div>
-                        <div className={styles.content_line}>
-                            <span>location:</span>
-                            <p>
-                                {data?.city}, {data?.state}, {data?.country}
-                            </p>
-                        </div>
-                        <div className={styles.content_line}>
-                            <span>phone:</span>
-                            <p>{data?.phone}</p>
-                        </div>
-                        <div className={styles.content_line}>
-                            <span>website:</span>
-                            <p className={styles.link_to}>
-                                {data?.website_url}
-                            </p>
-                        </div>
-                        <p className={styles.link_to}>Open on Map</p>
+                        {data?.brewery_type && (
+                            <div className={styles.content_line}>
+                                <span>type:</span>
+                                <p>{data?.brewery_type}</p>
+                            </div>
+                        )}
+                        {data?.street && (
+                            <div className={styles.content_line}>
+                                <span>street:</span>
+                                <p>{data?.street}</p>
+                            </div>
+                        )}
+                        {data?.city && (
+                            <div className={styles.content_line}>
+                                <span>location:</span>
+                                <p>
+                                    {data?.city}, {data?.state}, {data?.country}
+                                </p>
+                            </div>
+                        )}
+                        {data?.phone && (
+                            <div className={styles.content_line}>
+                                <span>phone:</span>
+                                <p>{data?.phone}</p>
+                            </div>
+                        )}
+                        {data?.website_url && (
+                            <div className={styles.content_line}>
+                                <span>website:</span>
+                                <p
+                                    className={styles.link_to}
+                                    onClick={openWebsite}
+                                >
+                                    {data?.website_url}
+                                </p>
+                            </div>
+                        )}
+                        <p className={styles.link_to} onClick={openOnMaps}>
+                            Open on Map
+                        </p>
                         <PrimaryButton
                             clicked={
                                 isBreweryFavorite

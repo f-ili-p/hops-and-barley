@@ -3,9 +3,16 @@
 
 .favorites {
     @include flexbox(column, center, center);
+    width: 100%;
+    margin-bottom: 50px;
+
+    @include respond_to(lg) {
+        width: 1440px;
+    }
 
     h1 {
-        margin-bottom: 60px;
+        text-align: center;
+        margin: 0 0 60px;
     }
 
     p {

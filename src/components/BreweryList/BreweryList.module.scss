@@ -4,10 +4,25 @@
 .breweries_list {
     animation: mainShow 0.3s ease-in-out;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(1, minmax(100%, 1fr));
     grid-template-rows: auto;
-    grid-column-gap: 15px;
-    grid-row-gap: 40px;
+    grid-gap: 1rem;
+    padding: 0 15px;
+    max-width: 1440px;
+
+    @include respond_to(md) {
+        grid-template-columns: repeat(2, minmax(330px, 1fr));
+    }
+
+    @include respond_to(lg) {
+        grid-template-columns: repeat(3, minmax(400px, 1fr));
+        padding: 0;
+    }
+}
+
+.btn {
+    width: 300px;
+    margin: 50px 0;
 }
 
 @keyframes mainShow {

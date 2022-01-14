@@ -2,20 +2,35 @@
 @import "scss/mixins";
 
 .single_brewery {
-    width: 1440px;
-    height: 600px;
-    @include flexbox(row, space-evenly, center);
+    width: 100%;
+    height: auto;
+    @include flexbox(column, center, center);
+
+    @include respond_to(lg) {
+        @include flexbox(row, space-evenly, center);
+    }
 
     img {
-        width: 700px;
+        width: 100%;
         height: 100%;
         object-fit: cover;
+
+        @include respond_to(lg) {
+            width: 700px;
+            height: 600px;
+        }
     }
 
     .content {
-        width: 400px;
+        // width: 100%;
         height: 100%;
         @include flexbox(column, flex-start, flex-start);
+        padding: 0 15px 50px;
+
+        @include respond_to(lg) {
+            width: 400px;
+            padding: 0;
+        }
     }
 
     .content_line {
